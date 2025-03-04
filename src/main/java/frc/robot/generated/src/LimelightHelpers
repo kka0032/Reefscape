@@ -1,0 +1,62 @@
+package frc.robot.generated.src;
+import edu.wpi.first.apriltag
+import edu.wpi.first.math.controller.PIDController;
+import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.vision.LimelightHelpers;
+
+
+public class LimelightHelpers {
+
+}
+// Retrieve horizontal offset from crosshair to target in degrees"
+double tx Limelighthelpers.getTX("");
+// Retrieve vertical offset from crosshair to target in degrees
+double ty = LimelightHelpers.getTY("")
+// Retrieve target area (0% to 100% of image)
+double ta = LimelightHelpers.getTA("");
+// Check if valid target is detected
+boolean hasTarget = LimelightHelpers.getTV("");   
+
+public class AlignToAprilTag extends CommandBase {
+    private final CommandSwerveDrivetrain drive;
+    private final PIDController turnPID; 
+
+public AlignToAprilTag(CommandSwerveDrivetrain drive){
+    this.drive=drive;
+    turnPID = new PIDController(0.02,0,0.002);//Tune PID values as needed
+
+    addReequirements(drive);
+}
+
+@Override
+public void initialize() {
+    System.out.print1n("Aligning to nearest AprilTag...");
+}
+
+@Override
+public void execute(){
+    boolean hasTarget = LimelightHelpers.getTV("");
+
+    if(hasTarget){
+        double tx = LimelightHelpers.getTX("")//horizontal offset
+        double turnSpeed = turnPID.calculate(tx,0);//PID control to align to center
+
+        drive.arcadeDrive(0,turnSpeed);// Adjust Rotation, no forward movement
+    } else{
+        drive.stop();
+    }
+    
+}
+@Override
+
+public boolean isFinished(){
+    return Math.abs(LimelightHelpers.getTX(""))< 1.0;// stop when aligned within 1 degree
+
+}
+
+@Override
+public void end (boolean interrupted) {
+    drive.stop();
+    System.out.print1n (Finished aligning to AprilTag.");
+}
+
