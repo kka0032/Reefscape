@@ -23,13 +23,13 @@ import frc.robot.subsystems.CoralIntake;
 import frc.robot.subsystems.BallIntake;
 // import frc.robot.command.AlignToAprilTag;
 
-import frc.robot.commands.*;
+import frc.robot.Commands.*;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.CoralIntakeConstants;
 
 import frc.robot.util.Util;
 
-public class RobotContainer {
+public class Main {
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     // NOTE: moved MAX_SPEED and MAX_ANG_RATE over to Constants file, this may break things
@@ -54,7 +54,7 @@ public class RobotContainer {
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
 
-    public RobotContainer() {
+    public Main() {
         configureBindings();
     }
 

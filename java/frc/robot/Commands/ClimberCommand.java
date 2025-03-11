@@ -1,6 +1,7 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 // also see Command get imported... if the above gives issues, try this
 // import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Climber;
@@ -10,11 +11,11 @@ import frc.robot.Constants.JoystickConstants;
 
 public class ClimberCommand extends Command {
     private final Climber climber;
-    private final XboxController operator;
+    private final CommandXboxController operator;
 
-    public ClimberCommand(Climber climber, XboxController operator) {
+    public ClimberCommand(Climber climber, CommandXboxController operator2) {
         this.climber = climber;
-        this.operator = operator;
+        this.operator = operator2;
         addRequirements(climber);
     }
 

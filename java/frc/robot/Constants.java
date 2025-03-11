@@ -18,14 +18,17 @@ import com.revrobotics.spark.config.SparkFlexConfig;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.units.LinearVelocityUnit;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Elevator.ElevatorState;
 
 public final class Constants {
     public static final class DriveConstants {
+        private static final LinearVelocityUnit MetersPerSecond = null;
         public static final double MAX_SPEED = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);       // kSpeedAt12Volts desired top speed
-        // NOTE: I don't know where RotationsPerSecond comes from, that will probably break
-        public static final double MAX_ANG_RATE = RotationsPerSecond.of(0.75).in(RadiansPerSecond);   // 3/4 of a rotation per second max angular velocity
+                private static final String RadiansPerSecond = null;
+                // NOTE: I don't know where RotationsPerSecond comes from, that will probably break
+                public static final double MAX_ANG_RATE = RotationsPerSecond.of(0.75).in(RadiansPerSecond);   // 3/4 of a rotation per second max angular velocity
     }
 
     public static final class ElevatorConstants {
@@ -91,8 +94,8 @@ public final class Constants {
       // NOTE: all following configs are probably not something you care about, if they cause issues stub 'em all out
       private static final Slot0Configs CLIMBER_MOTOR_GAINS = new Slot0Configs()
         .withKP(3.596).withKI(0.0).withKD(0.0)                                    // PID controller gains for climber motor
-        .withKS(0.1103).withKV(0.92196).withKA(0.0019)                            // Friction, velocity, and acceleration feedforward gains
-        .withKG(0.5609).withGravityType(GravityTypeValue.Climber_Static);        // Gravity compensation gains
+        .withKS(0.1103).withKV(0.92196).withKA(0.0019) ;                           // Friction, velocity, and acceleration feedforward gains
+        //.withKG(0.5609).withGravityType(GravityTypeValue.Climber_Static);        // Gravity compensation gains
   
       private static final CurrentLimitsConfigs CLIMBER_MOTOR_CURRENT = new CurrentLimitsConfigs()
       .withSupplyCurrentLimit(50).withSupplyCurrentLimitEnable(true)          // Max allowable supply current
@@ -133,18 +136,18 @@ public final class Constants {
         public static final int PDH_CAN = 1;
     
         // Swerve Drive Hardware
-        public static final int FR_DRIVE_KRAKEN_CAN = 2;
+        public static final int FR_DRIVE_KRAKEN_CAN = 1;
         public static final int FR_STEER_NEO_CAN = 3;
-        public static final int FR_STEER_CANCODER_CAN = 4;
-        public static final int RR_DRIVE_KRAKEN_CAN = 5;
-        public static final int RR_STEER_NEO_CAN = 6;
-        public static final int RR_STEER_CANCODER_CAN = 7;
-        public static final int RL_DRIVE_KRAKEN_CAN = 8;
-        public static final int RL_STEER_NEO_CAN = 9;
-        public static final int RL_STEER_CANCODER_CAN = 10;
-        public static final int FL_DRIVE_KRAKEN_CAN = 11;
-        public static final int FL_STEER_NEO_CAN = 12;
-        public static final int FL_STEER_CANCODER_CAN = 13;
+        public static final int FR_STEER_CANCODER_CAN = 41;
+        public static final int RR_DRIVE_KRAKEN_CAN = 6;
+        public static final int RR_STEER_NEO_CAN = 7;
+        public static final int RR_STEER_CANCODER_CAN = 40;
+        public static final int RL_DRIVE_KRAKEN_CAN = 0;
+        public static final int RL_STEER_NEO_CAN = 4;
+        public static final int RL_STEER_CANCODER_CAN = 43;
+        public static final int FL_DRIVE_KRAKEN_CAN = 2;
+        public static final int FL_STEER_NEO_CAN = 5;
+        public static final int FL_STEER_CANCODER_CAN = 0;
     
         // Elevator Hardware
         public static final int ELEVATOR_LEADER_CAN = 14;
