@@ -25,14 +25,6 @@ import frc.robot.subsystems.Elevator.ElevatorState;
 import static edu.wpi.first.units.Units.*;
 
 public final class Constants {
-  public static final class DriveConstants {
-    private static final LinearVelocityUnit MetersPerSecond = null;
-    public static final double MAX_SPEED = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts
-                                                                                               // desired top speed
-    public static final double MAX_ANG_RATE = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per
-                                                                                                // second max angular
-                                                                                                // velocity
-  }
 
   public static final class ElevatorConstants {
     public static final double ELEVATOR_RATIO = 7.75; // Gear ratio for elevator

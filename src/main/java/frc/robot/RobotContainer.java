@@ -24,7 +24,6 @@ import frc.robot.subsystems.BallIntake;
 // import frc.robot.command.AlignToAprilTag;
 
 import frc.robot.Commands.*;
-import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.CoralIntakeConstants;
 
 import frc.robot.util.Util;
@@ -102,18 +101,15 @@ public class RobotContainer {
         // Runs elevator to raise/lower or return to default state based on driver left joystick
         // NOTE: There is a clever way to do this with lambda expressions and a RepeatCommand class but choosing not to implement that because it's trickier
         // See: https://github.com/FRC7153/2025-Reefscape/blob/main/src/main/java/frc/robot/RobotContainer.java and https://github.com/FRC7153/2025-Reefscape/blob/main/src/main/java/frc/robot/commands/ManipulatorCommand.java
-        elevator.setDefaultCommand(new ElevatorCommand(elevator, operator));
+        elevator.setDefaultCommand(new ElevatorCommand(elevator, operator.getHID()));
 
         // Runs climber to raise/lower or return to default state based on driver left joystick
         // NOTE: There is a clever way to do this with lambda expressions and a RepeatCommand class but choosing not to implement that because it's trickier
         // See: https://github.com/FRC7153/2025-Reefscape/blob/main/src/main/java/frc/robot/RobotContainer.java and https://github.com/FRC7153/2025-Reefscape/blob/main/src/main/java/frc/robot/commands/ManipulatorCommand.java
         climber.setDefaultCommand(new ClimberCommand(climber, operator));        
 
-        // Runs coral intake while left trigger is pressed
-        operator.leftTrigger().whileTrue(coral.setIntakeVelocity(CoralIntakeConstants.MAX_INTAKE_VEL));
-
-        // Runs coral intake in reverse while right trigger is pressed
-        operator.rightTrigger().whileTrue(coral.setIntakeVelocity(-CoralIntakeConstants.MAX_INTAKE_VEL));
+        operator.leftTrigger().whileTrue(new SetIntakeVelocity(coral, CoralIntakeConstants.MAX_INTAKE_VEL));
+        operator.rightTrigger().whileTrue(new SetIntakeVelocity(coral, -CoralIntakeConstants.MAX_INTAKE_VEL));
     }
 
     public Command getAutonomousCommand() {
