@@ -31,11 +31,17 @@ import frc.robot.util.Util;
 
 public class RobotContainer {
 
+    public static final double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts
+                                                                                               // desired top speed
+    public static final double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per
+                                                                                                // second max angular
+                                                                                                // velocity
+
     /* Setting up bindings for necessary control of the swerve drive platform */
     // NOTE: moved MAX_SPEED and MAX_ANG_RATE over to Constants file, this may break things
     // Good practice to declutter this class though
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-            .withDeadband(DriveConstants.MAX_SPEED * 0.1).withRotationalDeadband(DriveConstants.MAX_ANG_RATE * 0.1) // Add a 10% deadband
+            .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
@@ -46,7 +52,7 @@ public class RobotContainer {
     private final CoralIntake coral = new CoralIntake();
     private final BallIntake ball = new BallIntake();
 
-    private final Telemetry logger = new Telemetry(DriveConstants.MAX_SPEED);
+    private final Telemetry logger = new Telemetry(MaxSpeed);
 
     private final CommandXboxController driver = new CommandXboxController(0);
     private final CommandXboxController operator = new CommandXboxController(1);
