@@ -10,10 +10,10 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants.HardwareConstants;
 import frc.robot.Constants.CoralIntakeConstants;
 import frc.robot.Constants.ElevatorConstants;
-import com.ctre.phoenix6.controls.VelocityVoltage;;;
+import com.ctre.phoenix6.controls.VelocityVoltage;
 public final class CoralIntake implements Subsystem {
 
-    private final TalonFX coral_intake = new TalonFX(HardwareConstants.CORAL_INTAKE_CAN, HardwareConstants.CANIVORE);
+    private final TalonFX coral_intake = new TalonFX(HardwareConstants.CORAL_INTAKE_CAN);
 
     public CoralIntake() {
         coral_intake.getConfigurator().apply(ElevatorConstants.ELEVATOR_CONFIG);
@@ -24,19 +24,19 @@ public final class CoralIntake implements Subsystem {
     */
     public void setIntakeVelocity(double velocity) {
         // class member variable
-final VelocityVoltage m_velocity = new VelocityVoltage(0);
+        VelocityVoltage m_velocity = new VelocityVoltage(velocity);
 
-// robot init, set slot 0 gains
-var slot0Configs = new Slot0Configs();
-slot0Configs.kV = 0.12;
-slot0Configs.kP = 0.11;
-slot0Configs.kI = 0.48;
-slot0Configs.kD = 0.01;
-coral_intake.getConfigurator().apply(slot0Configs, 0.050);
+        // robot init, set slot 0 gains
+     //   var slot0Configs = new Slot0Configs();
+       // slot0Configs.kV = 0.12;
+        //slot0Configs.kP = 0.11;
+        //slot0Configs.kI = 0.48;
+       // slot0Configs.kD = 0.01;
+        //coral_intake.getConfigurator().apply(slot0Configs, 0.050);
 
-// periodic, run velocity control with slot 0 configs,
-// target velocity of 50 rps
-m_velocity.Slot = 0;
-coral_intake.setControl(m_velocity.withVelocity(velocity));
+        // periodic, run velocity control with slot 0 configs,
+        // target velocity of 50 rps
+        //m_velocity.Slot = 0;
+        coral_intake.setControl(m_velocity.withVelocity(velocity));
     }
 }

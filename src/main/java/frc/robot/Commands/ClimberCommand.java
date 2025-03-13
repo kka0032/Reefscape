@@ -30,9 +30,9 @@ public class ClimberCommand extends Command {
         } else if (climber_value < 0.0) {
             climber.lowerClimber();
         } else {
-            climber.commandDefault();
+          //  climber.commandDefault();
             // Can change this to stop climber depending on operator preference
-            // climber.stopClimber();
+             climber.stopClimber();
         }
         
     }

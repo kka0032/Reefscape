@@ -46,12 +46,12 @@ public class RobotContainer {
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
 
     // Instantiate subsystems
-    private final Elevator elevator = new Elevator();
+//private final Elevator elevator = new Elevator();
     private final Climber climber = new Climber();
     private final CoralIntake coral = new CoralIntake();
-    private final BallIntake ball = new BallIntake();
+//private final BallIntake ball = new BallIntake();
 
-    private final Telemetry logger = new Telemetry(MaxSpeed);
+   // private final Telemetry logger = new Telemetry(MaxSpeed);
 
     private final CommandXboxController driver = new CommandXboxController(0);
     private final CommandXboxController operator = new CommandXboxController(1);
@@ -96,12 +96,12 @@ public class RobotContainer {
         // reset the field-centric heading on left bumper press
         driver.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
-        drivetrain.registerTelemetry(logger::telemeterize);
+  //      drivetrain.registerTelemetry(logger::telemeterize);
 
         // Runs elevator to raise/lower or return to default state based on driver left joystick
         // NOTE: There is a clever way to do this with lambda expressions and a RepeatCommand class but choosing not to implement that because it's trickier
         // See: https://github.com/FRC7153/2025-Reefscape/blob/main/src/main/java/frc/robot/RobotContainer.java and https://github.com/FRC7153/2025-Reefscape/blob/main/src/main/java/frc/robot/commands/ManipulatorCommand.java
-        elevator.setDefaultCommand(new ElevatorCommand(elevator, operator.getHID()));
+   //     elevator.setDefaultCommand(new ElevatorCommand(elevator, operator.getHID()));
 
         // Runs climber to raise/lower or return to default state based on driver left joystick
         // NOTE: There is a clever way to do this with lambda expressions and a RepeatCommand class but choosing not to implement that because it's trickier

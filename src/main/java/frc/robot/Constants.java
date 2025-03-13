@@ -51,14 +51,14 @@ public final class Constants {
 
 /* ----- CORAL INTAKE ----- */
   public static final class CoralIntakeConstants {
-    public static final double MAX_INTAKE_VEL = 20.0;                       // Maximum speed of coral intake, in rotations per second
+    public static final double MAX_INTAKE_VEL = 1.0;                       // Maximum speed of coral intake, in rotations per second
 
     private static final MotorOutputConfigs CORAL_OUTPUT = new MotorOutputConfigs()
         .withInverted(InvertedValue.CounterClockwise_Positive)              // Defines positive spin direction of motor
         .withNeutralMode(NeutralModeValue.Brake);                           // Apply brakes when not actively driven
 
-    public static final TalonFXConfiguration CORAL_CONFIG = new TalonFXConfiguration()
-        .withMotorOutput(CORAL_OUTPUT);
+    public static final TalonFXConfiguration CORAL_CONFIG = new TalonFXConfiguration();
+     //   .withMotorOutput(CORAL_OUTPUT);
   }
 
 /* ----- ELEVATOR ----- */
