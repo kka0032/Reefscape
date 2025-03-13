@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.util.Util;
 import frc.robot.Constants.JoystickConstants;
 
+
 public class ClimberCommand extends Command {
     private final Climber climber;
     private final CommandXboxController operator;
@@ -22,7 +23,7 @@ public class ClimberCommand extends Command {
     @Override
     public void execute() {
         // Determine whether right joystick is positive or negative to raise or lower climber
-        double climber_value = Util.applyDeadband(operator.getRightX(), JoystickConstants.DEADBAND);
+        double climber_value = Util.applyDeadband(operator.getRightY(), JoystickConstants.DEADBAND);
 
         if (climber_value > 0.0) {
             climber.raiseClimber();

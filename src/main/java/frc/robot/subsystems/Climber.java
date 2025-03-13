@@ -14,7 +14,7 @@ import frc.robot.Constants.HardwareConstants;
 public final class Climber implements Subsystem {
     public static record ClimberState(double height, double angle) {}
     
-    private final TalonFX climberMain = new TalonFX(HardwareConstants.CLIMBER_CAN, HardwareConstants.CANIVORE);
+    private final TalonFX climberMain = new TalonFX(HardwareConstants.CLIMBER_CAN);
 
     private final MotionMagicVoltage climberPositionRequest = new MotionMagicVoltage(0.0)
         .withOverrideBrakeDurNeutral(true)      // Kill motor within control deadband
@@ -28,7 +28,7 @@ public final class Climber implements Subsystem {
       //  climberFollower.setControl(new Follower(HardwareConstants.CLIMBER_LEADER_CAN, false));
          
         // Reset the climber's encoders
-        resetClimberEncoder();
+       resetClimberEncoder();
 
     }
 
