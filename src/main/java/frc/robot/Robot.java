@@ -41,13 +41,16 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    // m_robotContainer.autothing();
+  }
 
   @Override
   public void autonomousExit() {}
 
   @Override
   public void teleopInit() {
+    // m_robotContainer.configureBindings();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }

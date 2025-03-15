@@ -45,6 +45,18 @@ public final class Climber implements Subsystem {
         // climberMain.setControl(rotations);
     }
 
+    public void moveClimberUp(){
+        climberMain.set(0.4);
+    }
+
+    public void moveClimberDown(){
+        climberMain.set(-0.4);
+    }
+
+    public void zero(){
+        climberMain.set(0);
+    }
+
     public void raiseClimber(){
         climberMain.setControl(climberPositionRequest.withPosition(ClimberConstants.MAX_CLIMBER));
 

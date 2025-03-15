@@ -90,4 +90,18 @@ public final class Elevator implements Subsystem {
         elevatorMain.setPosition(0.0);
         elevatorFollower.setPosition(0.0);
       }
+       public void elevatorup(){
+         elevatorMain.set(0.4);
+         elevatorFollower.set(.4);
+     }
+
+     public void elevatordown(){
+         elevatorMain.set(-0.4);
+         elevatorFollower.set(-.4);
+     }
+
+     public void stopelevator(){
+         elevatorMain.set(0);
+         elevatorFollower.set(0);
+     }
 }

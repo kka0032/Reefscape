@@ -33,7 +33,7 @@ public final class Constants {
 
 /* ----- CLIMBER ----- */
   public static final class ClimberConstants {
-    public static final double MAX_CLIMBER = 4.5;                           // Maximum climber position, rotations
+    public static final double MAX_CLIMBER = 8;                           // Maximum climber position, rotations
     public static final double MIN_CLIMBER = 0.0;                           // Minimum climber position, rotations
 
     private static final MotionMagicConfigs CLIMBER_MM_CONFIGS = new MotionMagicConfigs()
@@ -106,10 +106,11 @@ public final class Constants {
     public static final int ELEVATOR_LIMIT_SWITCH_DIO = 0;
 
     // Climber Hardware
-    public static final int CLIMBER_CAN = 33;
+    public static final int CLIMBER_CAN = 35;
 
     // Manipulator Hardware
-    public static final int CORAL_INTAKE_CAN = 31;
+    public static final int CORAL_INTAKE_CAN = 33;
+    public static final int algae_CAN = 36;
     public static final int MANIPULATOR_SENSORS_CAN = 8; // Spark Max, no motor
 
     // CAN Busses

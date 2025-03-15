@@ -13,6 +13,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.generated.TunerConstants;
@@ -20,6 +21,7 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CoralIntake;
+import frc.robot.subsystems.AlgaePivot;
 import frc.robot.subsystems.BallIntake;
 // import frc.robot.command.AlignToAprilTag;
 
@@ -36,6 +38,8 @@ public class RobotContainer {
                                                                                                 // second max angular
                                                                                                 // velocity
 
+
+
     /* Setting up bindings for necessary control of the swerve drive platform */
     // NOTE: moved MAX_SPEED and MAX_ANG_RATE over to Constants file, this may break things
     // Good practice to declutter this class though
@@ -46,27 +50,44 @@ public class RobotContainer {
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
 
     // Instantiate subsystems
-//private final Elevator elevator = new Elevator();
+    private final Elevator elevator = new Elevator();
     private final Climber climber = new Climber();
     private final CoralIntake coral = new CoralIntake();
-//private final BallIntake ball = new BallIntake();
+    private final BallIntake ball = new BallIntake();
+    private final AlgaePivot algae = new AlgaePivot();
+    
+    
+
+  
+    private final BallSuckCommand ballIntakeCommand = new BallSuckCommand(ball, true, false);
+    private final BallSuckCommand ballOuttakeCommand = new BallSuckCommand(ball, false, true);
+
+  //  private final CoralCommand intakeCoralCommand =  new CoralCommand(coral, true);
 
    // private final Telemetry logger = new Telemetry(MaxSpeed);
 
     private final CommandXboxController driver = new CommandXboxController(0);
+    // private final CommandXboxController operator = new CommandXboxController(1);
     private final CommandXboxController operator = new CommandXboxController(1);
 
+
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
-
-
-    public RobotContainer() {
-        configureBindings();
+//auto practice
+   public void autothing()
+    {
+        drivetrain.applyRequest(() ->
+                drive.withVelocityX(0).withVelocityY(-.4).withRotationalRate(0) // Drive forward with negative Y (forward)
+            );
     }
 
+    public RobotContainer() {
+       configureBindings();
+    
+    }
     /**
     * Use this method to define your trigger->command mappings.
     */
-    private void configureBindings() {
+    public void configureBindings() {
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
         drivetrain.setDefaultCommand(
@@ -82,7 +103,9 @@ public class RobotContainer {
         driver.b().whileTrue(drivetrain.applyRequest(() ->
             point.withModuleDirection(new Rotation2d(-driver.getLeftY(), -driver.getLeftX()))
         ));
-
+        climber.setDefaultCommand(new RunCommand(() -> climber.zero(), climber));
+        coral.setDefaultCommand(new RunCommand(() -> coral.zero(), coral));
+        algae.setDefaultCommand(new RunCommand(() -> algae.zero(), algae));
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
         driver.back().and(driver.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
@@ -106,13 +129,34 @@ public class RobotContainer {
         // Runs climber to raise/lower or return to default state based on driver left joystick
         // NOTE: There is a clever way to do this with lambda expressions and a RepeatCommand class but choosing not to implement that because it's trickier
         // See: https://github.com/FRC7153/2025-Reefscape/blob/main/src/main/java/frc/robot/RobotContainer.java and https://github.com/FRC7153/2025-Reefscape/blob/main/src/main/java/frc/robot/commands/ManipulatorCommand.java
-        climber.setDefaultCommand(new ClimberCommand(climber, operator));        
+       // climber.setDefaultCommand(new ClimberCommand(climber, operator));        
+            elevator.setDefaultCommand(new ElevatorCommand(elevator, operator));
+       // operator.leftTrigger().whileTrue(new SetIntakeVelocity(coral, CoralIntakeConstants.MAX_INTAKE_VEL));
+        //operator.rightTrigger().whileTrue(new SetIntakeVelocity(coral, -CoralIntakeConstants.MAX_INTAKE_VEL));
+        // coral.setDefaultCommand(new CoralCommand(coral, operator));
+        //operator.getLeftBumper().onTrue(new CoralCommand(coral, true));
+         operator.button(1).whileTrue(new RunCommand(() -> ball.ballout(),ball)); 
+         operator.button(3).whileTrue(new RunCommand(() -> ball.ballin(),ball));
+         operator.button(9).whileTrue(new RunCommand(() -> ball.ballstop(),ball)); 
+       //  operator.button(11).whileTrue(new RunCommand()) -> elevator.elevatorup(),elevator));
+       //  operator.button(12).whileTrue(new RunCommand()) -> elevator.elevatordown(),elevator));
 
-        operator.leftTrigger().whileTrue(new SetIntakeVelocity(coral, CoralIntakeConstants.MAX_INTAKE_VEL));
-        operator.rightTrigger().whileTrue(new SetIntakeVelocity(coral, -CoralIntakeConstants.MAX_INTAKE_VEL));
+        operator.button(5).whileTrue(new RunCommand(() -> coral.coralout(),coral)); 
+        operator.button(6).whileTrue(new RunCommand(() -> coral.coralin(),coral));
+      //  operator.leftTrigger().whileTrue(ballIntakeCommand);
+       // operator.rightTrigger().whileTrue(ballOuttakeCommand);
+        operator.button(4).whileTrue(new RunCommand(() -> climber.moveClimberUp(), climber)); // move up
+        operator.button(2).whileTrue(new RunCommand(() -> climber.moveClimberDown(), climber)); // move down
+
+        driver.button(3).whileTrue(new RunCommand(()  -> algae.algaeup(), algae));
+        driver.button(4).whileTrue(new RunCommand(()  -> algae.algaedown(), algae)); 
+      //  operator.getLeftY(new RunCommand(null, null)) -> elevator.elevatorup(),elevator));
     }
 
+
     public Command getAutonomousCommand() {
-        return Commands.print("No autonomous command configured");
+        return drivetrain.applyRequest(() ->
+        drive.withVelocityX(2).withVelocityY(0).withRotationalRate(0) // Drive forward with negative Y (forward)
+    ).repeatedly().withTimeout(2.0);
     }
 }
