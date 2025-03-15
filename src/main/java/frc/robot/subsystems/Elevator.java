@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.controls.Follower;
 // import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.StaticBrake;
@@ -20,6 +21,7 @@ public final class Elevator implements Subsystem {
 
     // If there is a follower motor:
     private final TalonFX elevatorFollower = new TalonFX(HardwareConstants.ELEVATOR_FOLLOWER_CAN);
+    
 
     private final MotionMagicVoltage elevatorPositionRequest = new MotionMagicVoltage(0.0)
         .withOverrideBrakeDurNeutral(true)      // Kill motor within control deadband
@@ -67,6 +69,7 @@ public final class Elevator implements Subsystem {
 
     public void lowerElevator(){
         elevatorMain.setControl(elevatorPositionRequest.withPosition(ElevatorConstants.MIN_ELEVATOR));
+        elevatorFollower.setControl(new Follower(20, true));
 
         // If above doesn't work, consider ditching MotionMagic:
         // elevatorMain.setControl(ElevatorConstants.MAX_ELEVATOR);        
@@ -77,6 +80,7 @@ public final class Elevator implements Subsystem {
      */
     public void stopElevator() {
         elevatorMain.setControl(staticBrakeRequest);
+        elevatorFollower.setControl(new Follower(20, true));
     }
 
     /*
@@ -92,16 +96,19 @@ public final class Elevator implements Subsystem {
       }
        public void elevatorup(){
          elevatorMain.set(0.4);
-         elevatorFollower.set(.4);
+         elevatorFollower.setControl(new Follower(20, true));
+         
      }
 
      public void elevatordown(){
          elevatorMain.set(-0.4);
-         elevatorFollower.set(-.4);
+         elevatorFollower.setControl(new Follower(20, true));
+         
      }
 
      public void stopelevator(){
          elevatorMain.set(0);
-         elevatorFollower.set(0);
+         elevatorFollower.setControl(new Follower(20, true));
+         
      }
 }

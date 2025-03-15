@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import java.io.ObjectInputFilter.Config;
 //import com.revrobotics.config.SparkBaseConfig;
 import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.Subsystem;
@@ -28,7 +27,7 @@ public void ballout(){
     algaeIntake.set(-0.9);
 } 
 public void ballstop(){
-    algaeIntake.set(0);
+    algaeIntake.set(0.01);
     
 } 
 }

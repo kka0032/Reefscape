@@ -101,11 +101,15 @@ public class RobotContainer {
 
         driver.a().whileTrue(drivetrain.applyRequest(() -> brake));
         driver.b().whileTrue(drivetrain.applyRequest(() ->
-            point.withModuleDirection(new Rotation2d(-driver.getLeftY(), -driver.getLeftX()))
+        point.withModuleDirection(new Rotation2d(-driver.getLeftY(), -driver.getLeftX()))
         ));
         climber.setDefaultCommand(new RunCommand(() -> climber.zero(), climber));
         coral.setDefaultCommand(new RunCommand(() -> coral.zero(), coral));
         algae.setDefaultCommand(new RunCommand(() -> algae.zero(), algae));
+
+
+
+       ball.setDefaultCommand(new RunCommand(() -> ball.ballstop(), ball));
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
         driver.back().and(driver.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
@@ -137,7 +141,7 @@ public class RobotContainer {
         //operator.getLeftBumper().onTrue(new CoralCommand(coral, true));
          operator.button(1).whileTrue(new RunCommand(() -> ball.ballout(),ball)); 
          operator.button(3).whileTrue(new RunCommand(() -> ball.ballin(),ball));
-         operator.button(9).whileTrue(new RunCommand(() -> ball.ballstop(),ball)); 
+         operator.button(10).whileTrue(new RunCommand(() -> ball.ballstop(),ball)); 
        //  operator.button(11).whileTrue(new RunCommand()) -> elevator.elevatorup(),elevator));
        //  operator.button(12).whileTrue(new RunCommand()) -> elevator.elevatordown(),elevator));
 
