@@ -27,7 +27,7 @@ public void ballout(){
     algaeIntake.set(-0.9);
 } 
 public void ballstop(){
-    algaeIntake.set(0.01);
+    algaeIntake.set(0.15);
     
 } 
 }

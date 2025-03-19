@@ -42,7 +42,7 @@ public class CoralCommand extends Command {
 
       @Override
       public void end(boolean interrupted){
-        coral.setIntakeVelocity(0);
+        coral.setIntakeVelocity(0); 
       }
         
     }

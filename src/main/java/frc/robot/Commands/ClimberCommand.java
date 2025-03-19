@@ -2,10 +2,7 @@ package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-// also see Command get imported... if the above gives issues, try this
-// import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Climber;
-import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.util.Util;
 import frc.robot.Constants.JoystickConstants;
 
@@ -22,19 +19,18 @@ public class ClimberCommand extends Command {
 
     @Override
     public void execute() {
-        // Determine whether right joystick is positive or negative to raise or lower climber
-        double climber_value = Util.applyDeadband(operator.getRightY(), JoystickConstants.DEADBAND);
+        // // Determine whether right joystick is positive or negative to raise or lower climber
+        // double climber_value = Util.applyDeadband(operator.getRightY(), JoystickConstants.DEADBAND);
 
-        if (climber_value > 0.0) {
-            climber.raiseClimber();
-        } else if (climber_value < 0.0) {
-            climber.lowerClimber();
-        } else {
-          //  climber.commandDefault();
-            // Can change this to stop climber depending on operator preference
-             climber.stopClimber();
+        // if (climber_value > 0.0) {
+        //     climber.raiseClimber();
+        // } else if (climber_value < 0.0) {
+        //     climber.lowerClimber();
+        // } else {
+        //   //  climber.commandDefault();
+        //     // Can change this to stop climber depending on operator preference
+        //      climber.stopClimber();
         }
         
     }
 
-}

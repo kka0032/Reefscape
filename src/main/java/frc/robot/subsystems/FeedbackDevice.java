@@ -1,7 +1,7 @@
-package frc.robot.subsystems;
+// package frc.robot.subsystems;
 
-public class FeedbackDevice {
+// public class FeedbackDevice {
 
-    public static final String IntegratedSensor = null;
+//     public static final String IntegratedSensor = null;
 
-}
+// }

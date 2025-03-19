@@ -23,26 +23,26 @@ public final class Climber implements Subsystem {
     private final StaticBrake staticBrakeRequest = new StaticBrake();
 
     public Climber() {
-        climberMain.getConfigurator().apply(ClimberConstants.CLIMBER_CONFIG);
-      //  climberFollower.getConfigurator().apply(ClimberConstants.CLIMBER_CONFIG);
-      //  climberFollower.setControl(new Follower(HardwareConstants.CLIMBER_LEADER_CAN, false));
+    //     climberMain.getConfigurator().apply(ClimberConstants.CLIMBER_CONFIG);
+    //   //  climberFollower.getConfigurator().apply(ClimberConstants.CLIMBER_CONFIG);
+    //   //  climberFollower.setControl(new Follower(HardwareConstants.CLIMBER_LEADER_CAN, false));
          
-        // Reset the climber's encoders
-       resetClimberEncoder();
+    //     // Reset the climber's encoders
+    //    resetClimberEncoder();
 
-    }
+    // }
 
-    /**
-     * @param rotations sets climber to set rotations (in rots).
-     */
-    public void setClimberPosition(double rotations){
-        // Sanity check rotations
-        rotations = MathUtil.clamp(rotations, ClimberConstants.MIN_CLIMBER, ClimberConstants.MAX_CLIMBER);
+    // /**
+    //  * @param rotations sets climber to set rotations (in rots).
+    //  */
+    // public void setClimberPosition(double rotations){
+    //     // Sanity check rotations
+    //     rotations = MathUtil.clamp(rotations, ClimberConstants.MIN_CLIMBER, ClimberConstants.MAX_CLIMBER);
 
-        climberMain.setControl(climberPositionRequest.withPosition(rotations));
+    //     climberMain.setControl(climberPositionRequest.withPosition(rotations));
 
-        // If above doesn't work, consider ditching MotionMagic:
-        // climberMain.setControl(rotations);
+    //     // If above doesn't work, consider ditching MotionMagic:
+    //     // climberMain.setControl(rotations);
     }
 
     public void moveClimberUp(){
@@ -57,19 +57,19 @@ public final class Climber implements Subsystem {
         climberMain.set(0);
     }
 
-    public void raiseClimber(){
-        climberMain.setControl(climberPositionRequest.withPosition(ClimberConstants.MAX_CLIMBER));
+    // public void raiseClimber(){
+    //     climberMain.setControl(climberPositionRequest.withPosition(ClimberConstants.MAX_CLIMBER));
 
-        // If above doesn't work, consider ditching MotionMagic:
-        // climberMain.setControl(ClimberConstants.MAX_CLIMBER);        
-    }
+    //     // If above doesn't work, consider ditching MotionMagic:
+    //     // climberMain.setControl(ClimberConstants.MAX_CLIMBER);        
+    // }
 
-    public void lowerClimber(){
-        climberMain.setControl(climberPositionRequest.withPosition(ClimberConstants.MIN_CLIMBER));
+    // public void lowerClimber(){
+    //     climberMain.setControl(climberPositionRequest.withPosition(ClimberConstants.MIN_CLIMBER));
 
-        // If above doesn't work, consider ditching MotionMagic:
-        // climberMain.setControl(ClimberConstants.MIN_CLIMBER);        
-    }
+    //     // If above doesn't work, consider ditching MotionMagic:
+    //     // climberMain.setControl(ClimberConstants.MIN_CLIMBER);        
+    // }
 
     /**
      * Stops the climber.

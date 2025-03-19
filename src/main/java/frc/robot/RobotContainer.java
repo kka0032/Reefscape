@@ -10,9 +10,7 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
@@ -23,12 +21,8 @@ import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CoralIntake;
 import frc.robot.subsystems.AlgaePivot;
 import frc.robot.subsystems.BallIntake;
-// import frc.robot.command.AlignToAprilTag;
 
 import frc.robot.Commands.*;
-import frc.robot.Constants.CoralIntakeConstants;
-
-import frc.robot.util.Util;
 
 public class RobotContainer {
 
@@ -106,6 +100,7 @@ public class RobotContainer {
         climber.setDefaultCommand(new RunCommand(() -> climber.zero(), climber));
         coral.setDefaultCommand(new RunCommand(() -> coral.zero(), coral));
         algae.setDefaultCommand(new RunCommand(() -> algae.zero(), algae));
+        elevator.setDefaultCommand(new RunCommand(() -> elevator.zero(), elevator));
 
 
 
@@ -134,14 +129,14 @@ public class RobotContainer {
         // NOTE: There is a clever way to do this with lambda expressions and a RepeatCommand class but choosing not to implement that because it's trickier
         // See: https://github.com/FRC7153/2025-Reefscape/blob/main/src/main/java/frc/robot/RobotContainer.java and https://github.com/FRC7153/2025-Reefscape/blob/main/src/main/java/frc/robot/commands/ManipulatorCommand.java
        // climber.setDefaultCommand(new ClimberCommand(climber, operator));        
-            elevator.setDefaultCommand(new ElevatorCommand(elevator, operator));
+          //  elevator.setDefaultCommand(new ElevatorCommand(elevator, operator));
        // operator.leftTrigger().whileTrue(new SetIntakeVelocity(coral, CoralIntakeConstants.MAX_INTAKE_VEL));
         //operator.rightTrigger().whileTrue(new SetIntakeVelocity(coral, -CoralIntakeConstants.MAX_INTAKE_VEL));
         // coral.setDefaultCommand(new CoralCommand(coral, operator));
         //operator.getLeftBumper().onTrue(new CoralCommand(coral, true));
-         operator.button(1).whileTrue(new RunCommand(() -> ball.ballout(),ball)); 
-         operator.button(3).whileTrue(new RunCommand(() -> ball.ballin(),ball));
-         operator.button(10).whileTrue(new RunCommand(() -> ball.ballstop(),ball)); 
+         driver.button(5).whileTrue(new RunCommand(() -> ball.ballout(),ball)); 
+         driver.button(6).whileTrue(new RunCommand(() -> ball.ballin(),ball));
+        // operator.button(10).whileTrue(new RunCommand(() -> ball.ballstop(),ball)); 
        //  operator.button(11).whileTrue(new RunCommand()) -> elevator.elevatorup(),elevator));
        //  operator.button(12).whileTrue(new RunCommand()) -> elevator.elevatordown(),elevator));
 
@@ -149,11 +144,16 @@ public class RobotContainer {
         operator.button(6).whileTrue(new RunCommand(() -> coral.coralin(),coral));
       //  operator.leftTrigger().whileTrue(ballIntakeCommand);
        // operator.rightTrigger().whileTrue(ballOuttakeCommand);
-        operator.button(4).whileTrue(new RunCommand(() -> climber.moveClimberUp(), climber)); // move up
-        operator.button(2).whileTrue(new RunCommand(() -> climber.moveClimberDown(), climber)); // move down
+        operator.button(11).whileTrue(new RunCommand(() -> climber.moveClimberUp(), climber)); // move up
+        operator.button(12).whileTrue(new RunCommand(() -> climber.moveClimberDown(), climber)); // move down
 
-        driver.button(3).whileTrue(new RunCommand(()  -> algae.algaeup(), algae));
-        driver.button(4).whileTrue(new RunCommand(()  -> algae.algaedown(), algae)); 
+        operator.button(1).whileTrue(new RunCommand(() -> elevator.level1(),elevator));
+        operator.button(2).whileTrue(new RunCommand(() -> elevator.Max(),elevator));
+        operator.button(3).whileTrue(new RunCommand(() -> elevator.level2(),elevator));
+        operator.button(4).whileTrue(new RunCommand(() -> elevator.level3(),elevator));
+
+        driver.leftTrigger(.5).whileTrue(new RunCommand(()  -> algae.algaeup(), algae));
+        driver.rightTrigger(.5).whileTrue(new RunCommand(()  -> algae.algaedown(), algae)); 
       //  operator.getLeftY(new RunCommand(null, null)) -> elevator.elevatorup(),elevator));
     }
 

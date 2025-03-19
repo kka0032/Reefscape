@@ -1,17 +1,12 @@
 package frc.robot.subsystems;
-
-import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.StaticBrake;          // API at https://api.ctr-electronics.com/phoenix6/release/java/com/ctre/phoenix6/controls/StaticBrake.html
 import com.ctre.phoenix6.hardware.TalonFX;              // API at https://api.ctr-electronics.com/phoenix6/release/java/com/ctre/phoenix6/hardware/TalonFX.html
-import com.ctre.phoenix6.controls.VelocityDutyCycle;    // API at https://api.ctr-electronics.com/phoenix6/release/java/com/ctre/phoenix6/controls/VelocityDutyCycle.html
+
 import com.ctre.phoenix6.controls.VelocityVoltage;
 
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants.HardwareConstants;
 import frc.robot.Constants.CoralIntakeConstants;
-import frc.robot.Constants.ElevatorConstants;
-import com.ctre.phoenix6.controls.VelocityVoltage;
 public final class CoralIntake implements Subsystem {
 
     private final TalonFX coral_intake = new TalonFX(HardwareConstants.CORAL_INTAKE_CAN);
@@ -46,11 +41,11 @@ public final class CoralIntake implements Subsystem {
         throw new UnsupportedOperationException("Unimplemented method 'set'");
     }
     public void coralin(){
-        coral_intake.set(0.4);
+        coral_intake.set(-0.25);
     }
   
     public void coralout(){
-        coral_intake.set(-0.4);
+        coral_intake.set(0.25);
     } 
 
     public void zero(){

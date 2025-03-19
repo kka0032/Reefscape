@@ -1,7 +1,7 @@
-package frc.robot.subsystems;
+// package frc.robot.subsystems;
 
-public class GlobalVariables {
+// public class GlobalVariables {
 
-    public static String climbtasknumber;
+//     public static String climbtasknumber;
 
-}
+// }
