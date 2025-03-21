@@ -42,7 +42,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    // m_robotContainer.autothing();
+     m_robotContainer.autothing();
   }
 
   @Override

@@ -46,7 +46,7 @@ public final class Climber implements Subsystem {
     }
 
     public void moveClimberUp(){
-        climberMain.set(0.4);
+        climberMain.set(0.7);
     }
 
     public void moveClimberDown(){
@@ -89,4 +89,6 @@ public final class Climber implements Subsystem {
         climberMain.setPosition(0.0);
       //  climberFollower.setPosition(0.0);
       }
+      
 }
+

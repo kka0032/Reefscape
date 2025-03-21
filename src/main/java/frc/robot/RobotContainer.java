@@ -11,6 +11,7 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
@@ -42,7 +43,9 @@ public class RobotContainer {
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
-
+    private final SwerveRequest.RobotCentric driveauto = new SwerveRequest.RobotCentric()
+    .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+    .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
     // Instantiate subsystems
     private final Elevator elevator = new Elevator();
     private final Climber climber = new Climber();
@@ -52,25 +55,19 @@ public class RobotContainer {
     
     
 
-  
-    private final BallSuckCommand ballIntakeCommand = new BallSuckCommand(ball, true, false);
-    private final BallSuckCommand ballOuttakeCommand = new BallSuckCommand(ball, false, true);
 
-  //  private final CoralCommand intakeCoralCommand =  new CoralCommand(coral, true);
-
-   // private final Telemetry logger = new Telemetry(MaxSpeed);
 
     private final CommandXboxController driver = new CommandXboxController(0);
-    // private final CommandXboxController operator = new CommandXboxController(1);
+
     private final CommandXboxController operator = new CommandXboxController(1);
 
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 //auto practice
-   public void autothing()
+   public Command autothing()
     {
-        drivetrain.applyRequest(() ->
-                drive.withVelocityX(0).withVelocityY(-.4).withRotationalRate(0) // Drive forward with negative Y (forward)
+        return drivetrain.applyRequest(() ->
+                drive.withVelocityX(.1).withVelocityY(0).withRotationalRate(0) // Drive forward with negative Y (forward)
             );
     }
 
@@ -93,7 +90,7 @@ public class RobotContainer {
             )
         );
 
-        driver.a().whileTrue(drivetrain.applyRequest(() -> brake));
+        // driver.a().whileTrue(drivetrain.applyRequest(() -> brake));
         driver.b().whileTrue(drivetrain.applyRequest(() ->
         point.withModuleDirection(new Rotation2d(-driver.getLeftY(), -driver.getLeftX()))
         ));
@@ -117,6 +114,7 @@ public class RobotContainer {
         
         // reset the field-centric heading on left bumper press
         driver.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+        driver.a().onTrue(new InstantCommand(() -> drivetrain.getPigeon2().reset()));
 
   //      drivetrain.registerTelemetry(logger::telemeterize);
 
@@ -136,31 +134,36 @@ public class RobotContainer {
         //operator.getLeftBumper().onTrue(new CoralCommand(coral, true));
          driver.button(5).whileTrue(new RunCommand(() -> ball.ballout(),ball)); 
          driver.button(6).whileTrue(new RunCommand(() -> ball.ballin(),ball));
-        // operator.button(10).whileTrue(new RunCommand(() -> ball.ballstop(),ball)); 
-       //  operator.button(11).whileTrue(new RunCommand()) -> elevator.elevatorup(),elevator));
-       //  operator.button(12).whileTrue(new RunCommand()) -> elevator.elevatordown(),elevator));
 
-        operator.button(5).whileTrue(new RunCommand(() -> coral.coralout(),coral)); 
-        operator.button(6).whileTrue(new RunCommand(() -> coral.coralin(),coral));
+
+        operator.button(6).whileTrue(new RunCommand(() -> coral.coralfeed(),coral)); 
+        operator.button(5).whileTrue(new RunCommand(() -> coral.coralin(),coral));
       //  operator.leftTrigger().whileTrue(ballIntakeCommand);
        // operator.rightTrigger().whileTrue(ballOuttakeCommand);
-        operator.button(11).whileTrue(new RunCommand(() -> climber.moveClimberUp(), climber)); // move up
-        operator.button(12).whileTrue(new RunCommand(() -> climber.moveClimberDown(), climber)); // move down
-
+      //  operator.button(11).whileTrue(new RunCommand(() -> climber.moveClimberUp(), climber)); // move up
+       // operator.button(12).whileTrue(new RunCommand(() -> climber.moveClimberDown(), climber)); // move down
+            //A1 B2 X3 Y4
         operator.button(1).whileTrue(new RunCommand(() -> elevator.level1(),elevator));
-        operator.button(2).whileTrue(new RunCommand(() -> elevator.Max(),elevator));
+        //operator.button(2).whileTrue(new RunCommand(() -> elevator.Max(),elevator));
         operator.button(3).whileTrue(new RunCommand(() -> elevator.level2(),elevator));
         operator.button(4).whileTrue(new RunCommand(() -> elevator.level3(),elevator));
-
+        //operator.dPadDown().whileTrue(new RunCommand(() -> climber.moveClimberUp(), climber));
+        //driver.button(8).whileTrue(new RunCommand(() -> ControlMode.zeroGyro(),gyro));
+       
+       
+       // zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
         driver.leftTrigger(.5).whileTrue(new RunCommand(()  -> algae.algaeup(), algae));
-        driver.rightTrigger(.5).whileTrue(new RunCommand(()  -> algae.algaedown(), algae)); 
+        driver.rightTrigger(.5).whileTrue(new RunCommand(()  -> algae.algaedown(), algae));
+        operator.rightTrigger(.5).whileTrue(new RunCommand(()  -> coral.coralout(), coral));
+        operator.leftTrigger(.5).whileTrue(new RunCommand(() -> climber.moveClimberDown(), climber));
+        operator.button(2).whileTrue(new RunCommand(() -> climber.moveClimberUp(), climber));
       //  operator.getLeftY(new RunCommand(null, null)) -> elevator.elevatorup(),elevator));
     }
 
 
     public Command getAutonomousCommand() {
         return drivetrain.applyRequest(() ->
-        drive.withVelocityX(2).withVelocityY(0).withRotationalRate(0) // Drive forward with negative Y (forward)
+        driveauto.withVelocityX(2).withVelocityY(0).withRotationalRate(0) // Drive forward with negative Y (forward)
     ).repeatedly().withTimeout(2.0);
     }
 }

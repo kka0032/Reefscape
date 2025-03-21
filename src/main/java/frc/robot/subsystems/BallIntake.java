@@ -20,11 +20,11 @@ public class BallIntake implements Subsystem {
 
 
 public void ballin(){
-    algaeIntake.set(0.9);
+    algaeIntake.set(0.8);
 }
 
 public void ballout(){
-    algaeIntake.set(-0.9);
+    algaeIntake.set(-1);
 } 
 public void ballstop(){
     algaeIntake.set(0.15);

@@ -26,7 +26,7 @@ public final class Elevator implements Subsystem {
     
     public final TalonFX elevatorMain = new TalonFX(HardwareConstants.ELEVATOR_LEADER_CAN);
    // private final DigitalInput elevator_limit_switch = new DigitalInput(HardwareConstants.ELEVATOR_LIMIT_SWITCH_DIO);
-   DigitalInput Max_limit = new DigitalInput(3);
+   //DigitalInput Max_limit = new DigitalInput(3);
     DigitalInput L3_limit = new DigitalInput(2);
     DigitalInput L2_limit = new DigitalInput(1);
     DigitalInput Min_limit = new DigitalInput(0);
@@ -53,8 +53,6 @@ public final class Elevator implements Subsystem {
     //   //instantiate control objects
         //   positionControl = new PositionVoltage(0);
         //   velocityControl = new VelocityVoltage(0);
-         //   DigitalInput top_limit = new DigitalInput(0);
-        // DigitalInput bottom_limit = new DigitalInput(1);
             //     // elevatorFollower.getConfigurator().apply(ElevatorConstants.ELEVATOR_CONFIG);
             //     // elevatorFollower.setControl(new Follower(HardwareConstants.ELEVATOR_LEADER_CAN, false));
           
@@ -86,7 +84,7 @@ public final class Elevator implements Subsystem {
     }
 
     public void level1(){
-        elevatorMain.set(-.5);
+        elevatorMain.set(1);
         elevatorFollower.setControl(new Follower(20, true));
         if(Min_limit.get() == true){
             elevatorMain.stopMotor();
@@ -99,9 +97,9 @@ public final class Elevator implements Subsystem {
      }
 
      public void level2(){
-        elevatorMain.set(.5);
+        elevatorMain.set(-1);
         elevatorFollower.setControl(new Follower(20, true));
-        if(L2_limit.get() == true){
+        if(L2_limit.get() == false){
             elevatorMain.stopMotor();
             }
 
@@ -113,7 +111,7 @@ public final class Elevator implements Subsystem {
      }
 
       public void reset(){
-         elevatorMain.set(-.4);
+         elevatorMain.set(.8);
          elevatorFollower.setControl(new Follower(20, true));
          if(Min_limit.get() == true){
             elevatorMain.stopMotor();
@@ -127,7 +125,7 @@ public final class Elevator implements Subsystem {
 
      
       public void level3(){
-        elevatorMain.set(.5);
+        elevatorMain.set(-1);
         elevatorFollower.setControl(new Follower(20, true));
         if(L3_limit.get() == true){
             elevatorMain.stopMotor();
@@ -140,18 +138,18 @@ public final class Elevator implements Subsystem {
         
          
       }
-      public void Max(){
-        elevatorMain.set(.4);
-        elevatorFollower.setControl(new Follower(20, true));
-        if(Max_limit.get() == true){
-           elevatorMain.stopMotor();
-           }
+    //   public void Max(){
+    //     elevatorMain.set(-.5);
+    //     elevatorFollower.setControl(new Follower(20, true));
+    //     if(Max_limit.get() == true){
+    //        elevatorMain.stopMotor();
+    //        }
 
-          else {
+    //       else {
         
-        }
+    //     }
        
-    }
+    // }
 
     }
 
