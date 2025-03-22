@@ -38,7 +38,7 @@ public class RobotContainer {
     /* Setting up bindings for necessary control of the swerve drive platform */
     // NOTE: moved MAX_SPEED and MAX_ANG_RATE over to Constants file, this may break things
     // Good practice to declutter this class though
-    private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+    private final SwerveRequest.RobotCentric drive = new SwerveRequest.RobotCentric()
             .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
@@ -84,8 +84,8 @@ public class RobotContainer {
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
-                drive.withVelocityX(-driver.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-driver.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+                drive.withVelocityX(driver.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
+                    .withVelocityY(driver.getLeftX() * MaxSpeed) // Drive left with negative X (left)
                     .withRotationalRate(-driver.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
             )
         );
@@ -113,8 +113,9 @@ public class RobotContainer {
         //driver.x().whileTrue(getAutonomousCommand(new LimelightHelpers));
         
         // reset the field-centric heading on left bumper press
-        driver.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
-        driver.a().onTrue(new InstantCommand(() -> drivetrain.getPigeon2().reset()));
+        driver.a().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+        driver.start().onTrue(drivetrain.runOnce(() ->  new SwerveRequest.RobotCentric()));
+        driver.x().onTrue(new InstantCommand(() -> drivetrain.getPigeon2().reset()));
 
   //      drivetrain.registerTelemetry(logger::telemeterize);
 
@@ -163,7 +164,7 @@ public class RobotContainer {
 
     public Command getAutonomousCommand() {
         return drivetrain.applyRequest(() ->
-        driveauto.withVelocityX(2).withVelocityY(0).withRotationalRate(0) // Drive forward with negative Y (forward)
+        driveauto.withVelocityX(-2).withVelocityY(0).withRotationalRate(0) // Drive forward with negative Y (forward)
     ).repeatedly().withTimeout(2.0);
     }
 }
